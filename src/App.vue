@@ -27,14 +27,18 @@ export default {
           })
         );
       };
-      setTimeout(() => {
-        jsBridgeApi("portrait", {});
-        const div = document.getElementsByClassName("vue-main")[0];
-        div.style.width = window.innerWidth + "px";
-        div.style.height = window.innerHeight + "px";
-        div.style.transform = "";
-        div.style.position = "fixed";
-      }, 3000);
+      // setTimeout(() => {
+      //   if (typeof window.webAppBridge != "undefined")
+      //   {
+      //     jsBridgeApi("portrait", {});
+      //     const div = document.getElementsByClassName("vue-main")[0];
+      //     div.style.width = window.innerWidth + "px";
+      //     div.style.height = window.innerHeight + "px";
+      //     div.style.transform = "";
+      //     div.style.position = "fixed";
+
+      //   }
+      // }, 3000);
       const interval = setInterval(() => {
         // if (o.flag.screenOrientation == 0) return true;//已经是纵向显示了
         // o.flag.screenOrientation = 0;
@@ -49,6 +53,15 @@ export default {
         //   clearInterval(interval);
         // }
         // document.documentElement.requestFullscreen();
+        if (typeof window.webAppBridge != "undefined") {
+          jsBridgeApi("portrait", {});
+          const div = document.getElementsByClassName("vue-main")[0];
+          div.style.width = window.innerWidth + "px";
+          div.style.height = window.innerHeight + "px";
+          div.style.transform = "";
+          div.style.position = "fixed";
+          clearInterval(interval);
+        }
       }, 1000);
     });
   },
