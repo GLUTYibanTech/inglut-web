@@ -87,7 +87,7 @@ export default {
     box-sizing: border-box
     overflow-x: scroll
     overflow-y: hidden
-    column-gap: 10px
+    // column-gap: 10px
     overflow: -moz-scrollbars-none
 .text-ellipsis
     white-space: nowrap
@@ -99,6 +99,8 @@ export default {
     width: 109px
     height: 79px
     display: flex
+    margin-left: 5px
+    margin-right: 5px
     flex-direction: column
     justify-content: center
     border-radius: 3px

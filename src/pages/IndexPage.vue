@@ -119,7 +119,7 @@ export default {
     });
     return {
       push() {
-        router.push("/class");
+        router.replace("/class");
       },
       pushToLocal() {
         window.location.href = "http://localhost:3000/";

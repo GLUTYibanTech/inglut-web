@@ -43,7 +43,7 @@ export default {
     box-sizing: border-box
     overflow-x: scroll
     overflow-y: hidden
-    column-gap: 10px
+    // column-gap: 10px
     overflow: -moz-scrollbars-none
 .text-ellipsis
     white-space: nowrap
@@ -52,6 +52,8 @@ export default {
 .singleExam
     flex-grow: 0
     flex-shrink: 0
+    margin-left: 5px
+    margin-right: 5px
     width: 109px
     height: 70px
     display: flex

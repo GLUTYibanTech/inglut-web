@@ -6,7 +6,9 @@
     <q-card-section>
       <div class="row">
         <div class="col-12" v-for="i in 7" :key="i">
-          <div class="q-ml-md">111111111111111111111111</div>
+          <div class="q-ml-md ellipsis text-no-wrap">
+            【桂林理工大学易班】通知公告测试通知公告测试通知公告测
+          </div>
         </div>
       </div>
     </q-card-section>
