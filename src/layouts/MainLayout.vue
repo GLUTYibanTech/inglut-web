@@ -9,54 +9,6 @@
         <q-toolbar-title style="user-select: none"> in桂工 </q-toolbar-title>
       </q-toolbar>
     </q-header> -->
-    <!-- 左侧抽屉 -->
-    <!-- <q-drawer
-      v-model="leftDrawerOpen"
-      side="left"
-      behavior="mobile"
-      :width="220"
-    > -->
-    <!-- 个人信息 -->
-    <!-- <q-img
-        class="absolute-top"
-        src="../assets/material.png"
-        style="height: 150px"
-      >
-        <div class="absolute-bottom bg-transparent" v-if="isFinished">
-          <q-avatar size="56px" class="q-mb-sm">
-            <img src="../assets/boy-avatar.png" />
-          </q-avatar>
-          <div class="text-weight-bold">{{ userInfo.realName }}</div>
-          <div>{{ userInfo.className }}</div>
-        </div>
-      </q-img> -->
-    <!-- 导航菜单 -->
-    <!-- <q-scroll-area
-        style="
-          height: calc(100% - 150px);
-          margin-top: 150px;
-          border-right: 1px solid #ddd;
-        "
-      >
-        <q-list padding>
-          <q-item
-            clickable
-            v-ripple
-            v-for="(item, index) in naviItem"
-            @click="goto(item.to)"
-            :active="item.to == route.path"
-            :key="index"
-          > -->
-    <!-- 头像 -->
-    <!-- <q-item-section avatar>
-              <q-icon :name="item.icon" />
-            </q-item-section>
-
-            <q-item-section> {{ item.name }} </q-item-section>
-          </q-item>
-        </q-list>
-      </q-scroll-area>
-    </q-drawer> -->
     <q-page-container>
       <!-- 路由页面 -->
       <router-view v-slot="{ Component }">
@@ -69,11 +21,11 @@
       </router-view>
       <!-- 路由页面 -->
     </q-page-container>
-    <q-footer elevated>
+    <q-footer>
       <q-tabs
         v-model="tab"
-        indicator-color="yellow"
-        class="bg-primary text-white shadow-2"
+        indicator-color="primary"
+        class="bg-white text-primary shadow-2"
       >
         <q-tab
           v-for="(item, index) in naviItem"
@@ -83,9 +35,6 @@
           :label="item.name"
           @click="goto(item.to)"
         />
-        <!-- <q-tab name="apps" icon="apps" label="应用" />
-        <q-tab name="search" icon="search" label="发现" />
-        <q-tab name="mine" icon="school" label="我的" /> -->
       </q-tabs>
     </q-footer>
   </q-layout>

@@ -7,6 +7,7 @@
       今日课程 <q-icon name="navigate_next" size="20px" />
     </div>
     <q-card-section>
+      {{ isFinished }}{{ getTodayClass(data) }}
       <div
         class="classListContainer"
         v-if="isFinished && getTodayClass(data).length != 0"
