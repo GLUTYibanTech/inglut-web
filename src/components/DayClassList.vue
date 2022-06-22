@@ -7,15 +7,15 @@
       今日课程 <q-icon name="navigate_next" size="20px" />
     </div>
     <q-card-section>
-      {{ isFinished }}{{ getTodayClass(data) }}
-      <div
-        class="classListContainer"
-        v-if="isFinished && getTodayClass(data).length != 0"
-      >
+      <!-- {{ isFinished }}{{ getTodayClass() }} -->
+      <!-- <div v-if="isFinished">
+        {{ getTodayClass() }}
+      </div> -->
+      <div class="classListContainer" v-if="isFinished && !isEmptyClassToday">
         <div
           class="singleClass relative-position bg-primary q-px-sm"
           v-ripple
-          v-for="(aClass, index) in getTodayClass(data)"
+          v-for="(aClass, index) in getTodayClass()"
           @click="showDialog(aClass)"
           :key="index"
         >
@@ -36,14 +36,15 @@
             v-if="aClass.badge != 1"
           />
         </div>
+        <div v-if="isEmptyClassToday" class="text-center">今日无课程</div>
       </div>
-      <div v-else class="text-center">今日无课程</div>
     </q-card-section>
   </q-card>
 </template>
 
 <script>
 import { useQuasar } from "quasar";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useClassTable } from "../composables/useClassTable";
 import { todayofWeek } from "../utils/today";
@@ -53,12 +54,17 @@ export default {
     const $q = useQuasar();
     const { isFinished, data, currentIndex } = useClassTable();
     const router = useRouter();
-
-    const getTodayClass = (data) =>
-      data[currentIndex.value][todayofWeek].filter((x) => !x.isEmpty);
+    const isEmptyClassToday = ref(false);
+    const getTodayClass = () => {
+      const todayClassdata = data.value[currentIndex.value][todayofWeek].filter(
+        (x) => !x.isEmpty
+      );
+      if (todayClassdata.length == 0) isEmptyClassToday.value = true;
+      return todayClassdata;
+    };
     return {
+      isEmptyClassToday,
       isFinished,
-      data,
       currentIndex,
       getTodayClass,
       pushToClassTable() {

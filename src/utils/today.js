@@ -6,7 +6,7 @@ const month = now.month(); //0-11
 const term = month < 8 && month > 1 ? "1" : "2"; //"1"春季”2“秋季
 const dayCount = now.diff(startDate, "day");
 let weekCount = now.diff(startDate, "week");
-let todayofWeek = now.day();
+let todayofWeek = now.day(); //从0开始计
 //dayjs每周第一天是周日，纠正为周一
 todayofWeek--;
 if (todayofWeek == -1) {
