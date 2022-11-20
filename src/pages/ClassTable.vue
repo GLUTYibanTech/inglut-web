@@ -81,12 +81,13 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { useClassTable } from "./../composables/useClassTable";
 import ClassInfoDialog from "./../components/classTable/ClassInfoDialog.vue";
 import WeekSlider from "./../components/classTable/WeekSlider.vue";
-import { isNewUser } from "../utils/user-manager";
+import { getUserInfo, isNewUser } from "../utils/user-manager";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 // 引入 Swiper 样式
 import "swiper/css";
 import { watch } from "vue-demi";
+import { feedbackError } from "../utils/errorFeedback";
 import {
   dayIndextoChineseChar,
   todayofWeek,
@@ -105,7 +106,29 @@ export default {
     });
     const $q = useQuasar();
     //使用课程表数据
-    let { currentIndex, data, isFinished, setting } = useClassTable();
+    let { currentIndex, data, isFinished, setting, status } = useClassTable();
+    watch(status, (value) => {
+      if (value == 200) {
+        $q.notify({
+          type: "positive",
+          message: "课表更新成功！",
+          timeout: 2000,
+          position: "top",
+        });
+      } else {
+        const info = getUserInfo();
+        if (info) {
+          feedbackError("课表错误：" + info.studentId);
+        }
+        $q.notify({
+          type: "negative",
+          message: "课表获取失败",
+          // caption: "客服群：1111111",
+          timeout: 2000,
+          position: "top",
+        });
+      }
+    });
     //swiper实例，可控制滑动
     let swiper;
     const onSwiper = (_swiper) => {

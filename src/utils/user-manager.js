@@ -1,5 +1,4 @@
 import { createAxiosWithToken, axios } from "./api";
-import Indexdb from "./indexdb";
 import indexdb from "./indexdb";
 async function bindJw(xh, mm) {
   var http = await axios.post("/webapi/bind", {
@@ -15,12 +14,29 @@ async function bindJw(xh, mm) {
     return null;
   }
 }
-async function getUserInfo() {
-  var http = await (await createAxiosWithToken()).get(`/webapi/info`);
-  return http;
+const keyName = "userinfo";
+async function getUserInfo({ fromDb = true } = { fromDb: true }) {
+  const hasDataInDb = await indexdb.hasKey(keyName, 24 * 10);
+  if (fromDb && hasDataInDb) {
+    console.log("从IndexDb中获取用户信息");
+    const info = (await indexdb.get(keyName)).data;
+    console.log(info);
+    return info;
+  } else {
+    const http = await (await createAxiosWithToken()).get(`/webapi/info`);
+    console.log("请求用户信息中");
+    if (http.status == 200) {
+      console.log("请求成功");
+      await indexdb.set(keyName, http.data);
+      return http.data;
+    } else {
+      console.log("请求失败");
+      return null;
+    }
+  }
 }
 async function isNewUser() {
-  return !(await Indexdb.hasKey("token"));
+  return !(await indexdb.hasKey("token"));
 }
 async function isLoginValid() {
   var http = await (await createAxiosWithToken()).get(`/isvalidToken`);

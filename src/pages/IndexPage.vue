@@ -107,7 +107,8 @@ export default {
     });
     onMounted(() => {
       window.addEventListener("popstate", function () {
-        window.history.go(-100);
+        // window.history.go(-100);
+        window.close();
       });
     });
     return {
