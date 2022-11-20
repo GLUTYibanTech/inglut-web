@@ -9,6 +9,7 @@ const routes = [
       { path: "class", component: () => import("./pages/ClassTable.vue") },
       { path: "exam", component: () => import("./pages/ExamPage.vue") },
       { path: "grade", component: () => import("./pages/ScorePage.vue") },
+      { path: "mine", component: () => import("./pages/MyInfoPage.vue") },
     ],
   },
   { path: "/about", component: () => import("./pages/AboutPage.vue") },
@@ -17,6 +18,7 @@ const routes = [
     component: () => import("./pages/LoginPage.vue"),
     props: (route) => ({ routeAfterSuccess: route.query.routeAfterSuccess }),
   },
+
   {
     path: "/:catchAll(.*)*",
     component: () => import("./pages/Error404.vue"),

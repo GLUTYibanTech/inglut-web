@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card" flat bordered>
+  <q-card flat bordered>
     <div
       class="q-mx-lg q-mt-md flex flex align-center"
       @click="pushToClassTable"
@@ -7,10 +7,6 @@
       今日课程 <q-icon name="navigate_next" size="20px" />
     </div>
     <q-card-section>
-      <!-- {{ isFinished }}{{ getTodayClass() }} -->
-      <!-- <div v-if="isFinished">
-        {{ getTodayClass() }}
-      </div> -->
       <div class="classListContainer" v-if="isFinished && !isEmptyClassToday">
         <div
           class="singleClass relative-position bg-primary q-px-sm"
@@ -33,11 +29,11 @@
             color="red"
             :label="aClass.badge"
             class="badge"
-            v-if="aClass.badge != 1"
+            v-if="aClass.badge !== 1"
           />
         </div>
-        <div v-if="isEmptyClassToday" class="text-center">今日无课程</div>
       </div>
+      <div v-if="isEmptyClassToday" class="text-center">今日无课程</div>
     </q-card-section>
   </q-card>
 </template>
@@ -59,7 +55,7 @@ export default {
       const todayClassdata = data.value[currentIndex.value][todayofWeek].filter(
         (x) => !x.isEmpty
       );
-      if (todayClassdata.length == 0) isEmptyClassToday.value = true;
+      if (todayClassdata.length === 0) isEmptyClassToday.value = true;
       return todayClassdata;
     };
     return {
@@ -103,11 +99,11 @@ export default {
 .singleClass
     flex-grow: 0
     flex-shrink: 0
+    margin-left: 5px
+    margin-right: 5px
     width: 109px
     height: 79px
     display: flex
-    margin-left: 5px
-    margin-right: 5px
     flex-direction: column
     justify-content: center
     border-radius: 3px

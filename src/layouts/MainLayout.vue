@@ -54,8 +54,8 @@ export default {
     $q.addressbarColor.set("#1976D2"); //浏览器链接栏颜色
     const naviItem = [
       { to: "/home", name: "首页", icon: "home" },
-      { to: "/apps", name: "应用", icon: "apps" },
-      { to: "/discover", name: "发现", icon: "search" },
+      // { to: "/apps", name: "应用", icon: "apps" },
+      // { to: "/discover", name: "发现", icon: "search" },
       { to: "/mine", name: "我的", icon: "school" },
     ];
     return {
@@ -63,8 +63,9 @@ export default {
       naviItem,
       goto(path) {
         // 可以保证用户在其他页面（非/home）按返回键时不会直接退出网站，而是回到主页。
-        if (path == "/home") {
-          router.push(path);
+        if (route.path == path) {
+          // router.push(path);
+          console.log("无需路由");
           return;
         }
         //直接替换当前路径，防止无限返回。

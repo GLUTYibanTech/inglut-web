@@ -29,12 +29,7 @@
         <div class="time-block" v-for="i in 14" :key="i">{{ i }}</div>
       </div>
       <!-- 使用swiper组件，可左右滑动 -->
-      <swiper
-        v-if="isFinished"
-        class="classes-swiper"
-        @swiper="onSwiper"
-        @slideChange="onSlideChange"
-      >
+      <swiper v-if="isFinished" @swiper="onSwiper" @slideChange="onSlideChange">
         <swiper-slide v-for="(aWeek, weekIndex) in data" :key="weekIndex">
           <div class="classes-container flex no-wrap">
             <!-- 一周 -->

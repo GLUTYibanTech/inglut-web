@@ -4,8 +4,13 @@ import indexdb from "../utils/indexdb";
 let isFinished = ref(false);
 const indexDbkey = "exam";
 const status = ref(0);
-const data = ref();
-function useExam({ fromDb = true } = { fromDb: true }) {
+const data = ref([]);
+function useExam(
+  { fromDb = true, filterFinished = false } = {
+    fromDb: true,
+    filterFinished: false,
+  }
+) {
   onMounted(async () => {
     const hasDataInDb = await indexdb.hasKey(indexDbkey);
     if (fromDb && hasDataInDb) {
@@ -14,15 +19,18 @@ function useExam({ fromDb = true } = { fromDb: true }) {
       console.log(dbData);
       data.value = dbData;
       isFinished.value = true;
-      return;
+    } else {
+      let http = await (await createAxiosWithToken()).get(`/webapi/exam`);
+      status.value = http.status;
+      if (http.status == 200) {
+        let dataModel = http.data;
+        console.log(dataModel);
+        await indexdb.set(indexDbkey, dataModel);
+        data.value = dataModel;
+      }
     }
-    let http = await (await createAxiosWithToken()).get(`/webapi/exam`);
-    status.value = http.status;
-    if (http.status == 200) {
-      let dataModel = http.data;
-      console.log(dataModel);
-      await indexdb.set(indexDbkey, dataModel);
-      data.value = dataModel;
+    if (filterFinished) {
+      data.value = data.value.filter((x) => !x[6]);
     }
   });
   return {

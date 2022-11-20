@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-const startDate = dayjs("2022-02-20");
+const startDate = dayjs("2022-08-28");
 const now = dayjs();
 const year = now.year();
 const month = now.month(); //0-11

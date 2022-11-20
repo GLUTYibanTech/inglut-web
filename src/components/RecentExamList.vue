@@ -1,15 +1,16 @@
 <template>
-  <q-card class="my-card" flat bordered>
-    <div class="q-mx-lg q-mt-md flex align-center">
+  <q-card flat bordered>
+    <div class="q-mx-lg q-mt-md flex align-center" @click="pushToExam">
       近期考试 <q-icon name="navigate_next" size="20px" />
     </div>
-    <q-card-section v-if="isFinished">
-      <div class="examListContainer">
+    <q-card-section>
+      <div class="examListContainer" v-if="isFinished && data.length > 1">
         <div
           class="singleExam relative-position bg-primary q-px-sm"
           v-ripple
           v-for="(exam, index) in data"
           :key="index"
+          @click="pushToExam"
         >
           <div class="text-white text-h6 text-subtitle1 text-ellipsis">
             {{ exam[0] }}
@@ -19,18 +20,25 @@
           </div>
         </div>
       </div>
+      <div v-if="data.length == 0" class="text-center">暂无考试</div>
     </q-card-section>
   </q-card>
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 import { useExam } from "../composables/useExam";
 export default {
   setup() {
-    const { data, isFinished } = useExam();
+    const router = useRouter();
+    const { data, isFinished } = useExam({ filterFinished: true });
+
     return {
       isFinished,
       data,
+      pushToExam() {
+        router.push("/exam");
+      },
     };
   },
 };
