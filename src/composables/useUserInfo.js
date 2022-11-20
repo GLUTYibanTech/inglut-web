@@ -5,8 +5,10 @@ const isFinished = ref(false);
 const data = ref([]);
 function useUserInfo({ fromDb = true } = { fromDb: true }) {
   getUserInfo({ fromDb: fromDb }).then((info) => {
-    data.value = info;
-    isFinished.value = true;
+    if (info) {
+      data.value = info;
+      isFinished.value = true;
+    }
   });
   return {
     isFinished,

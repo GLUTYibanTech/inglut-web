@@ -31,12 +31,33 @@
         </q-item-section>
       </q-item>
     </q-list>
+    <q-btn
+      color="primary"
+      style="width: 100%"
+      class="q-mt-lg"
+      @click="quitLogin"
+    >
+      <div class="ellipsis">退出登录</div>
+    </q-btn>
   </div>
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
 import { useUserInfo } from "../composables/useUserInfo";
 const { data, isFinished } = useUserInfo();
+const router = useRouter();
+async function quitLogin() {
+  window.indexedDB.deleteDatabase("inglutDb");
+  router.replace("/home");
+  // req.onsuccess = function () {
+
+  //   // router.go(0);
+  // };
+  // req.onblocked = function () {
+  //   console.log("s");
+  // };
+}
 </script>
 
 <style scoped></style>
