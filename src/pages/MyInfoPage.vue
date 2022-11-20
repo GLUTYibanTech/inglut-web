@@ -45,10 +45,11 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { useUserInfo } from "../composables/useUserInfo";
+import Indexdb from "../utils/indexdb";
 const { data, isFinished } = useUserInfo();
 const router = useRouter();
 async function quitLogin() {
-  window.indexedDB.deleteDatabase("inglutDb");
+  await Indexdb.clear();
   router.replace("/home");
   // req.onsuccess = function () {
 

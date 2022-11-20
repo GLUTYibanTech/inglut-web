@@ -19,6 +19,20 @@ var Indexdb = {
       };
     });
   },
+  async clear() {
+    var db = await this.dbInit();
+    return new Promise(function (resolve, reject) {
+      var transaction = db.transaction([storeName], "readwrite");
+      var objectStore = transaction.objectStore(storeName);
+      let req = objectStore.clear();
+      req.onsuccess = function () {
+        resolve();
+      };
+      req.onerror = function () {
+        reject();
+      };
+    });
+  },
   async add(key, data) {
     var db = await this.dbInit();
     return new Promise((r, j) => {
