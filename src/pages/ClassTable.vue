@@ -81,7 +81,9 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { useClassTable } from "./../composables/useClassTable";
 import ClassInfoDialog from "./../components/classTable/ClassInfoDialog.vue";
 import WeekSlider from "./../components/classTable/WeekSlider.vue";
+import { isNewUser } from "../utils/user-manager";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 // 引入 Swiper 样式
 import "swiper/css";
 import { onMounted, watch } from "vue-demi";
@@ -97,6 +99,10 @@ export default {
     SwiperSlide,
   },
   setup() {
+    const router = useRouter();
+    isNewUser().then((x) => {
+      if (x) router.push("/login?routeAfterSuccess=/class");
+    });
     const $q = useQuasar();
     //使用课程表数据
     let { currentIndex, data, isFinished, setting } = useClassTable();

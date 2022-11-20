@@ -47,6 +47,7 @@ export default {
     routeAfterSuccess: { type: String, default: "/" },
   },
   setup(props) {
+    console.log("登录成功后回调到：", props.routeAfterSuccess);
     const router = useRouter();
     const $q = useQuasar();
     const isPwd = ref(true);
