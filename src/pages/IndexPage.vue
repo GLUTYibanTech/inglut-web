@@ -105,9 +105,14 @@ export default {
       }
       // document.getElementsByTagName("body")[0].requestFullscreen();
     });
+    onMounted(() => {
+      window.addEventListener("popstate", function () {
+        window.history.go(-100);
+      });
+    });
     return {
       push() {
-        router.replace("/class");
+        router.push("/class");
       },
       pushToLocal() {
         window.location.href = "http://localhost:3000/";

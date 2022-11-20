@@ -69,7 +69,7 @@ export default {
           return;
         }
         //直接替换当前路径，防止无限返回。
-        router.replace(path);
+        router.push(path);
       },
       route,
     };

@@ -86,7 +86,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 // 引入 Swiper 样式
 import "swiper/css";
-import { onMounted, watch } from "vue-demi";
+import { watch } from "vue-demi";
 import {
   dayIndextoChineseChar,
   todayofWeek,
@@ -101,7 +101,7 @@ export default {
   setup() {
     const router = useRouter();
     isNewUser().then((x) => {
-      if (x) router.push("/login?routeAfterSuccess=/class");
+      if (x) router.replace("/login?routeAfterSuccess=/class");
     });
     const $q = useQuasar();
     //使用课程表数据
@@ -113,7 +113,6 @@ export default {
       //初始化滑到本周
       swiper.slideTo(currentIndex.value);
     };
-    onMounted(() => {});
     const onSlideChange = () => {
       //直接左右滑动时同步页面索引
       currentIndex.value = swiper.activeIndex;
