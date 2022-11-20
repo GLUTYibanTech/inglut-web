@@ -117,7 +117,7 @@ export default {
         });
       } else {
         const info = getUserInfo();
-        if (info) {
+        if (info && info.studentId) {
           feedbackError("课表错误：" + info.studentId);
         }
         $q.notify({
