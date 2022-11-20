@@ -7,7 +7,7 @@ const data = ref([]);
 function useUserInfo({ fromDb = true } = { fromDb: true }) {
   const keyName = "userinfo";
   onMounted(async () => {
-    const hasDataInDb = await indexdb.hasKey(keyName);
+    const hasDataInDb = await indexdb.hasKey(keyName, 24 * 10);
     if (fromDb && hasDataInDb) {
       console.log("从IndexDb中获取用户信息");
       const info = (await indexdb.get(keyName)).data;

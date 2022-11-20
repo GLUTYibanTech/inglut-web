@@ -16,7 +16,7 @@ const currentIndex = ref(weekCount);
 const status = ref(0);
 function useClassTable({ fromDb = true } = { fromDb: true }) {
   onMounted(async () => {
-    const hasDataInDb = await indexdb.hasKey(indexDbkey);
+    const hasDataInDb = await indexdb.hasKey(indexDbkey, 1);
     if (fromDb && hasDataInDb) {
       console.log("从IndexDb中获取课表");
       data.value = (await indexdb.get(indexDbkey)).data;

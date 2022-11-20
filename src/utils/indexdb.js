@@ -88,7 +88,7 @@ var Indexdb = {
       };
     });
   },
-  async get(key) {
+  async get(key, expirationHours = 0.0) {
     var db = await this.dbInit();
     return new Promise((r, j) => {
       var transaction = db.transaction([storeName]);
@@ -99,6 +99,15 @@ var Indexdb = {
       };
       request.onsuccess = function () {
         if (request.result) {
+          if (expirationHours !== 0.0 && request.result.time) {
+            const curDate = new Date();
+            const milliseconds = expirationHours * 1000 * 3600;
+            const minusSecs = curDate.getTime() - request.result.time;
+            if (minusSecs >= milliseconds) {
+              r(false);
+              return;
+            }
+          }
           r(request.result);
         } else {
           r(false);
@@ -106,7 +115,7 @@ var Indexdb = {
       };
     });
   },
-  async hasKey(key) {
+  async hasKey(key, expirationHours = 0.0) {
     var db = await this.dbInit();
     return new Promise((r) => {
       var transaction = db.transaction([storeName]);
@@ -118,6 +127,15 @@ var Indexdb = {
       request.onsuccess = function (e) {
         var cursor = e.target.result;
         if (cursor) {
+          if (expirationHours !== 0.0 && request.result.time) {
+            const curDate = new Date();
+            const milliseconds = expirationHours * 1000 * 3600;
+            const minusSecs = curDate.getTime() - request.result.time;
+            if (minusSecs >= milliseconds) {
+              r(false);
+              return;
+            }
+          }
           // key already exist
           r(true);
         } else {

@@ -10,7 +10,7 @@ function useGrade({ fromDb = true } = { fromDb: true }) {
   const keyName = "grade";
   onMounted(async () => {
     if (fromDb) {
-      const keyData = await indexdb.get(keyName);
+      const keyData = await indexdb.get(keyName, 1);
       if (keyData) {
         isFinished.value = true;
         data.value = keyData.data;

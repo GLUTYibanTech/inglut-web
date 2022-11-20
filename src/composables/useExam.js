@@ -12,7 +12,7 @@ function useExam(
   }
 ) {
   onMounted(async () => {
-    const hasDataInDb = await indexdb.hasKey(indexDbkey);
+    const hasDataInDb = await indexdb.hasKey(indexDbkey, 1);
     if (fromDb && hasDataInDb) {
       console.log("从IndexDb中获取考试");
       const dbData = (await indexdb.get(indexDbkey)).data;
