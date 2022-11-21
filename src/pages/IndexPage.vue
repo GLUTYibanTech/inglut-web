@@ -79,7 +79,7 @@ import {
   dayIndextoChineseChar,
   dayCount,
 } from "../utils/today";
-// import axios from "axios";
+import { isLoginValid, isNewUser } from "../utils/user-manager";
 import NewsNoticeVue from "./../components/NewsNotice.vue";
 import DayClassListVue from "../components/DayClassList.vue";
 import RecentExamListVue from "../components/RecentExamList.vue";
@@ -98,6 +98,11 @@ export default {
         // window.history.go(-100);
         window.close();
       });
+    });
+    onMounted(async () => {
+      if ((await isNewUser()) || !(await isLoginValid())) {
+        router.push("/login");
+      }
     });
     return {
       push() {
