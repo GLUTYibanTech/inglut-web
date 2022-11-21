@@ -16,7 +16,6 @@ function useExam(
     if (hasKey) {
       const dbData = (await indexdb.get(indexDbkey)).data;
       data.value = dbData;
-      isFinished.value = true;
     }
     const hasDataInDbIn1hour = await indexdb.hasKey(indexDbkey, 1);
     if (fromDb && hasDataInDbIn1hour) {
@@ -29,12 +28,12 @@ function useExam(
         console.log("http获取考试", dataModel);
         await indexdb.set(indexDbkey, dataModel);
         data.value = dataModel;
-        isFinished.value = true;
       }
     }
     if (filterFinished) {
       data.value = data.value.filter((x) => !x[6]);
     }
+    isFinished.value = true;
   });
   return {
     isFinished,
