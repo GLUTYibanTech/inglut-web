@@ -1,6 +1,6 @@
 <template>
   <q-card flat bordered>
-    <div class="q-mx-lg q-mt-md flex align-center" @click="pushToExam">
+    <div class="q-ml-md q-mt-md flex align-center" @click="pushToExam">
       近期考试 <q-icon name="navigate_next" size="20px" />
     </div>
     <q-card-section>

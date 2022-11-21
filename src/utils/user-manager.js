@@ -39,7 +39,7 @@ async function isNewUser() {
   return !(await indexdb.hasKey("token"));
 }
 async function isLoginValid() {
-  var http = await (await createAxiosWithToken()).get(`/isvalidToken`);
+  var http = await (await createAxiosWithToken()).get(`/webapi/isvalidToken`);
   return http.status == 200;
 }
 export { bindJw, getUserInfo, isLoginValid, isNewUser };

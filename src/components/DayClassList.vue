@@ -1,7 +1,7 @@
 <template>
   <q-card flat bordered>
     <div
-      class="q-mx-lg q-mt-md flex flex align-center"
+      class="q-ml-md q-mt-md flex flex align-center"
       @click="pushToClassTable"
     >
       今日课程 <q-icon name="navigate_next" size="20px" />
@@ -43,14 +43,18 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useClassTable } from "../composables/useClassTable";
-import { todayofWeek } from "../utils/today";
+import { todayofWeek, weekCount } from "../utils/today";
 import ClassInfoDialog from "./../components/classTable/ClassInfoDialog.vue";
 export default {
   setup() {
     const $q = useQuasar();
-    const { isFinished, data, currentIndex } = useClassTable();
     const router = useRouter();
+
+    const { isFinished, data, currentIndex } = useClassTable();
+    currentIndex.value = weekCount; //回到本周
+
     const isEmptyClassToday = ref(false);
+    //滤出今天的课程
     const getTodayClass = () => {
       const todayClassdata = data.value[currentIndex.value][todayofWeek].filter(
         (x) => !x.isEmpty
@@ -58,6 +62,7 @@ export default {
       if (todayClassdata.length === 0) isEmptyClassToday.value = true;
       return todayClassdata;
     };
+
     return {
       isEmptyClassToday,
       isFinished,

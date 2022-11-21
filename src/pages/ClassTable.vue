@@ -107,6 +107,7 @@ export default {
     const $q = useQuasar();
     //使用课程表数据
     let { currentIndex, data, isFinished, setting, status } = useClassTable();
+    //status从0变为200，202，
     watch(status, (value) => {
       if (value == 200) {
         $q.notify({
@@ -127,6 +128,10 @@ export default {
           timeout: 2000,
           position: "top",
         });
+      }
+      //若没有绑定
+      if (value === 211) {
+        router.push("/login?routeAfterSuccess=/class");
       }
     });
     //swiper实例，可控制滑动

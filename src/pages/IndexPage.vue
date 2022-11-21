@@ -51,7 +51,7 @@
               font-size="24px"
               color="primary"
               text-color="white"
-              icon="directions"
+              icon="calendar_today"
             />
             <div class="flex-center q-ma-sm" style="font-size: 0.9em">
               课程表
@@ -65,7 +65,7 @@
     <!-- <q-separator inset /> -->
     <DayClassListVue class="q-mx-sm" />
     <RecentExamListVue class="q-ma-sm" />
-    <NewsBroadcastVue class="-ma-sm" />
+    <NewsBroadcastVue class="q-ma-sm" />
   </div>
 </template>
 
@@ -73,7 +73,6 @@
 import "swiper/css";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-import { isNewUser } from "../utils/user-manager";
 import {
   weekCount,
   todayofWeek,
@@ -94,17 +93,6 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const url = ref("https://cdn.quasar.dev/img/mountains.jpg");
-    onMounted(async () => {
-      // const pictureurlHttp = await axios.get(
-      //   "https://bing.biturl.top/?resolution=1920&format=json&index=0&mkt=zh-CN"
-      // );
-      // url.value = pictureurlHttp.data.url;
-      if (await isNewUser()) {
-        router.push("/login");
-      }
-      // document.getElementsByTagName("body")[0].requestFullscreen();
-    });
     onMounted(() => {
       window.addEventListener("popstate", function () {
         // window.history.go(-100);
@@ -118,7 +106,6 @@ export default {
       pushToLocal() {
         window.location.href = "http://localhost:3000/";
       },
-      url,
       dayIndextoChineseChar,
       todayofWeek,
       weekCount,

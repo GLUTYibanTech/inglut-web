@@ -41,16 +41,20 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-
+import { isLoginValid, isNewUser } from "../utils/user-manager";
 export default {
   setup() {
     const $q = useQuasar();
     const router = useRouter();
     const route = useRoute();
-
+    onMounted(async () => {
+      if ((await isNewUser()) || !(await isLoginValid())) {
+        router.push("/login");
+      }
+    });
     $q.addressbarColor.set("#1976D2"); //浏览器链接栏颜色
     const naviItem = [
       { to: "/home", name: "首页", icon: "home" },
@@ -64,7 +68,6 @@ export default {
       goto(path) {
         // 可以保证用户在其他页面（非/home）按返回键时不会直接退出网站，而是回到主页。
         if (route.path == path) {
-          // router.push(path);
           console.log("无需路由");
           return;
         }

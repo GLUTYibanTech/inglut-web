@@ -16,12 +16,16 @@ const currentIndex = ref(weekCount);
 const status = ref(0);
 function useClassTable({ fromDb = true } = { fromDb: true }) {
   onMounted(async () => {
-    const hasDataInDb = await indexdb.hasKey(indexDbkey, 1); //1小时过期
-    if (fromDb && hasDataInDb) {
+    //先从缓存加载，如果过期再http更新
+    const hasKey = await indexdb.hasKey(indexDbkey);
+    if (hasKey) {
       console.log("从IndexDb中获取课表");
       data.value = (await indexdb.get(indexDbkey)).data;
       isFinished.value = true;
-      return;
+    }
+    const hasDataInDbIn1hour = await indexdb.hasKey(indexDbkey, 1); //1小时过期
+    if (fromDb && hasDataInDbIn1hour) {
+      return; //数据更新未超过一个小时就不请求
     }
     const dataModel = [];
     let http = await (await createAxiosWithToken()).get(`/webapi/class/days`);
@@ -118,7 +122,7 @@ function useClassTable({ fromDb = true } = { fromDb: true }) {
       await indexdb.set(indexDbkey, dataModel);
       data.value = dataModel;
       isFinished.value = true;
-      console.log(dataModel);
+      console.log("课表http请求:", dataModel);
     }
   });
   return {
