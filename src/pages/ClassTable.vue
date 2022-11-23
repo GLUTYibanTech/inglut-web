@@ -14,11 +14,10 @@
         class="day-row"
         v-for="i in 7"
         :key="i"
-        :style="
-          (i - 1 == todayofWeek && weekCount == currentIndex
-            ? 'background: #c6bdbd;color: #3d95c6;'
-            : '') + 'border-radius: 7px;'
-        "
+        :style="{
+          background:
+            i - 1 == todayofWeek && weekCount == currentIndex ? '#c6bdbd' : '',
+        }"
       >
         {{ dayIndextoChineseChar(i - 1) }} <br />
         {{ calcDateFromWeekandDay(currentIndex, i) }}
@@ -28,6 +27,7 @@
       <div class="time-slot-place-holder">
         <div class="time-block" v-for="i in 14" :key="i">{{ i }}</div>
       </div>
+
       <!-- 使用swiper组件，可左右滑动 -->
       <swiper v-if="isFinished" @swiper="onSwiper" @slideChange="onSlideChange">
         <swiper-slide v-for="(aWeek, weekIndex) in data" :key="weekIndex">
@@ -43,7 +43,7 @@
                 class="class-card-container"
                 v-for="(aClass, classIndex) in aDay"
                 :key="classIndex"
-                :style="'height:' + aClass.cardHeight + 'px'"
+                :style="{ height: aClass.cardHeight + 'px' }"
               >
                 <!-- 一节课 -->
                 <div
@@ -51,7 +51,7 @@
                   v-ripple
                   v-if="!aClass.isEmpty"
                   @click="showClassInfo(aClass)"
-                  :style="'background-color:' + aClass.color"
+                  :style="{ backgroundColor: aClass.color }"
                 >
                   <div class="text-card text-white">
                     {{ aClass.className }} <br />
@@ -100,11 +100,11 @@ export default {
     SwiperSlide,
   },
   setup() {
+    const $q = useQuasar();
     const router = useRouter();
     isNewUser().then((x) => {
       if (x) router.replace("/login?routeAfterSuccess=/class");
     });
-    const $q = useQuasar();
     //使用课程表数据
     let { currentIndex, data, isFinished, setting, status } = useClassTable();
     //status从0变为200，202，
@@ -134,6 +134,7 @@ export default {
         router.push("/login?routeAfterSuccess=/class");
       }
     });
+
     //swiper实例，可控制滑动
     let swiper;
     const onSwiper = (_swiper) => {
@@ -161,6 +162,7 @@ export default {
         }
       }, 500);
     });
+
     return {
       todayofWeek,
       weekCount,
@@ -244,6 +246,7 @@ export default {
   /* height: 22px;
   text-align: center
   flex: 1
+  border-radius:5px
 
 .time-slot-place-holder
   min-width: 9.5vw

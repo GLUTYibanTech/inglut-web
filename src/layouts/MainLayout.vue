@@ -44,14 +44,14 @@
 import { onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import { isLoginValid, isNewUser } from "../utils/user-manager";
+import { isNewUser } from "../utils/user-manager";
 export default {
   setup() {
     const $q = useQuasar();
     const router = useRouter();
     const route = useRoute();
     onMounted(async () => {
-      if ((await isNewUser()) || !(await isLoginValid())) {
+      if (await isNewUser()) {
         router.push("/login");
       }
     });

@@ -70,7 +70,6 @@
 </template>
 
 <script>
-import "swiper/css";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import {
