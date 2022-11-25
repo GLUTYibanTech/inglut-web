@@ -28,15 +28,17 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: npm run build --if-present
-    - name: Compress action step
-      uses: a7ul/tar-action@v1.1.0
-      id: compress
+    - name: Zip Release
+    # You may pin to the exact commit or the version.
+    # uses: TheDoctor0/zip-release@09336613be18a8208dfa66bd57efafd9e2685657
+      uses: TheDoctor0/zip-release@0.6.2
       with:
-        command: c
-        cwd: ./
-        files: |
-          ./dist
-        outPath: dist.tar.gz
+        # Filename for archive
+        filename: dist.tar.gz
+        # Working directory before zipping
+        path: ./dist 
+        # Tool to use for archiving
+        type: tar # optional, default is zip
     - name: HTTP Request Action
       # You may pin to the exact commit or the version.
       # uses: fjogeleit/http-request-action@f986377e36f4e3d86c0c42523e02b844785182e9
