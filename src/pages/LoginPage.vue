@@ -65,18 +65,25 @@ export default {
           position: "top",
         });
         var res = await bindJw(studentId.value, password.value);
-        if (res) {
+        if (res.token) {
           notify({
             type: "positive",
             message: "登录成功！",
             timeout: 2000,
           });
           router.replace(props.routeAfterSuccess);
-        } else {
+        } else if (res.res == 209) {
           notify({
             type: "negative",
             message: "登录失败，请检查学号密码正确性",
-            caption: "客服群：1111111",
+            caption: "客服QQ群:764709569",
+            timeout: 2000,
+          });
+        } else if (res.res == 212) {
+          notify({
+            type: "negative",
+            message: "登录失败，请检查是否登录过教务激活",
+            caption: "客服QQ群:764709569",
             timeout: 2000,
           });
         }
