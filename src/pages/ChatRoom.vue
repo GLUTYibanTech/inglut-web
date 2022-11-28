@@ -40,7 +40,7 @@
       </q-chat-message>
     </div>
     <q-input
-      class="fixed bottom q-py-md"
+      class="fixed bottom q-pb-md"
       v-model="sendText"
       outlined
       maxlength="1000"
@@ -151,7 +151,7 @@ onMounted(async () => {
   background-color: white;
 }
 .chat {
-  height: 78vh;
+  height: calc(100vh - 56px - 100px);
   overflow-y: scroll;
   overflow-x: hidden;
 }
