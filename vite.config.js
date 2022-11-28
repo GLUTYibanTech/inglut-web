@@ -48,8 +48,8 @@ export default defineConfig({
       },
       "/signalR": {
         // target: "https://yiban.glut.edu.cn/",
-        // rewrite: (path) => path.replace(/^\/webapi/, ""),
-        target: "https://yiban.glut.edu.cn/signalR",
+        rewrite: (path) => path.replace(/^\/signalR/, ""),
+        target: "ws://127.0.0.1:8000/chatHub",
         ws: true,
 
         // ws: false,

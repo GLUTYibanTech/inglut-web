@@ -111,6 +111,7 @@ function isMe(chatID) {
 let connection = new HubConnectionBuilder().withUrl("/signalR").build();
 function sendMessage() {
   connection.send("SendMessage", sendText.value);
+  sendText.value = "";
 }
 // const others = computed(() =>
 //   messageList.value.filter((x) => x.chatId != myChatId.value)
@@ -140,13 +141,28 @@ onMounted(async () => {
       } catch ({ e }) {
         console.log(e);
       }
-    }, 500);
+    }, 100);
   });
   connection.on("AuthRequired", async () => {
     connection.invoke("Auth", await indexdb.getToken());
   });
+  connection.on("ReceiveHistory", async (history) => {
+    console.log(history);
+    history.forEach((element) => {
+      element.dialogs = [element.message];
+      messageList.value.push(element);
+    });
+    setTimeout(() => {
+      try {
+        chatScroll.value.scrollTop = chatScroll.value.scrollHeight;
+      } catch ({ e }) {
+        console.log(e);
+      }
+    }, 100);
+  });
 
-  connection.start();
+  await connection.start();
+  connection.invoke("GetHistory");
 
   window.connection = connection;
 });
