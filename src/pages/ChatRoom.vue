@@ -40,10 +40,9 @@
       </q-chat-message>
     </div>
     <q-input
-      class="fixed bottom"
-      outlined
+      class="fixed bottom q-py-md"
       v-model="sendText"
-      label="发送内容"
+      outlined
       maxlength="1000"
     >
       <template v-slot:before>
@@ -63,34 +62,10 @@
         />
       </template>
 
-      <!-- <template v-slot:hint> Field hint </template> -->
-
       <template v-slot:after>
         <q-btn round dense flat icon="send" @click="sendMessage" />
       </template>
     </q-input>
-    <!-- <q-chat-message
-      avatar="https://cdn.quasar.dev/img/avatar5.jpg"
-      name="Jane"
-      :text="[
-        'doing fine, how r you?',
-        'I just feel like typing a really, really, REALLY long message to annoy you...',
-      ]"
-      size="6"
-      stamp="4 minutes ago"
-      text-color="white"
-      bg-color="primary"
-    >
-      <template #avatar>
-        <q-avatar
-          color="primary"
-          text-color="white"
-          font-size="30px"
-          icon="person_outline"
-          class="q-mr-sm"
-        />
-      </template>
-    </q-chat-message> -->
   </div>
 </template>
 
@@ -171,7 +146,9 @@ onMounted(async () => {
 <style scoped>
 .bottom {
   width: calc(100% - 15px);
-  bottom: 80px;
+  bottom: 70px;
+  z-index: 99;
+  background-color: white;
 }
 .chat {
   height: 78vh;
