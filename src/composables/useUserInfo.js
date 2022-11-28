@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { getUserInfo } from "../utils/user-manager";
 
 const isFinished = ref(false);
-const data = ref([]);
+const data = ref();
 function useUserInfo({ fromDb = true } = { fromDb: true }) {
   getUserInfo({ fromDb: fromDb }).then((info) => {
     if (info) {

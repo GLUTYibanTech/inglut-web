@@ -9,6 +9,7 @@ const routes = [
       { path: "class", component: () => import("./pages/ClassTable.vue") },
       { path: "exam", component: () => import("./pages/ExamPage.vue") },
       { path: "grade", component: () => import("./pages/ScorePage.vue") },
+      { path: "chat", component: () => import("./pages/ChatRoom.vue") },
       { path: "mine", component: () => import("./pages/MyInfoPage.vue") },
     ],
   },

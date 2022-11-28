@@ -45,4 +45,18 @@ async function isLoginValid() {
   var http = await (await createAxiosWithToken()).get(`/webapi/isvalidToken`);
   return http.status == 200;
 }
-export { bindJw, getUserInfo, isLoginValid, isNewUser, loginHttpStatus };
+async function setNickName(nickname) {
+  var http = await (
+    await createAxiosWithToken()
+  ).post(`/webapi/setNickName?nickName=${nickname}`);
+  await getUserInfo({ fromDb: false });
+  return http.status == 200;
+}
+export {
+  bindJw,
+  getUserInfo,
+  isLoginValid,
+  isNewUser,
+  setNickName,
+  loginHttpStatus,
+};

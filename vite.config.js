@@ -46,6 +46,13 @@ export default defineConfig({
 
         // ws: false,
       },
+      "/chatHub": {
+        // target: "https://yiban.glut.edu.cn/",
+        target: "ws://127.0.0.1:8000/",
+        ws: true,
+
+        // ws: false,
+      },
     },
   },
   // optimizeDeps: {

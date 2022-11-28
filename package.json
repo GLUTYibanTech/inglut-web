@@ -8,10 +8,12 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@microsoft/signalr": "^7.0.0",
     "@quasar/extras": "^1.13.6",
     "axios": "^0.27.2",
     "dayjs": "^1.11.1",
     "element-plus": "^2.1.11",
+    "md5": "^2.3.0",
     "pinia": "^2.0.13",
     "quasar": "^2.6.6",
     "swiper": "^8.1.4",

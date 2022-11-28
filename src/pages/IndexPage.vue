@@ -57,6 +57,18 @@
               课程表
             </div>
           </div>
+          <div class="col-3 text-center" @click="router.push('/chat')">
+            <q-avatar
+              size="50px"
+              font-size="24px"
+              color="primary"
+              text-color="white"
+              icon="chat"
+            />
+            <div class="flex-center q-ma-sm" style="font-size: 0.9em">
+              ChatRoom
+            </div>
+          </div>
         </div>
       </q-card-section>
     </q-card>
@@ -72,12 +84,14 @@
 <script>
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
+
 import {
   weekCount,
   todayofWeek,
   dayIndextoChineseChar,
   dayCount,
 } from "../utils/today";
+
 import { isLoginValid, isNewUser } from "../utils/user-manager";
 import NewsNoticeVue from "./../components/NewsNotice.vue";
 import DayClassListVue from "../components/DayClassList.vue";
@@ -103,10 +117,12 @@ export default {
         router.push("/login");
       }
     });
+
     return {
       push() {
         router.push("/class");
       },
+      router,
       pushToLocal() {
         window.location.href = "http://localhost:3000/";
       },
