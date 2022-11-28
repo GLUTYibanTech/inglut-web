@@ -46,8 +46,9 @@ export default defineConfig({
 
         // ws: false,
       },
-      "/chatHub": {
+      "/webapi/chatHub": {
         // target: "https://yiban.glut.edu.cn/",
+        rewrite: (path) => path.replace(/^\/webapi/, ""),
         target: "ws://127.0.0.1:8000/",
         ws: true,
 

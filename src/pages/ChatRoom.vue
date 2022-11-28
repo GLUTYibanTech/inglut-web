@@ -108,7 +108,7 @@ const myInfo = ref({});
 function isMe(chatID) {
   return myChatId.value == chatID;
 }
-let connection = new HubConnectionBuilder().withUrl("/chatHub").build();
+let connection = new HubConnectionBuilder().withUrl("/webapi/chatHub").build();
 function sendMessage() {
   connection.send("SendMessage", sendText.value);
 }
