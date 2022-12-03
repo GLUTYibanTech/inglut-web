@@ -2,13 +2,13 @@
   <div class="q-ma-sm">
     <!-- avatar="https://cdn.quasar.dev/img/avatar3.jpg" -->
     <div class="chat" ref="chatScroll">
+      <!-- :text="dialog.dialogs" -->
       <q-chat-message
         v-for="(dialog, index) in messageList"
         :key="index"
         :name="
           dialog.nick ? dialog.nick : 'Anonymous' + dialog.chatId.slice(0, 5)
         "
-        :text="dialog.dialogs"
         :stamp="
           dialog.time
             .substring('20', '.')
@@ -36,6 +36,13 @@
             }}</q-avatar
           >
         </template>
+        <div
+          v-for="(item, index) in dialog.dialogs"
+          :key="index"
+          style="max-width: 50vw; user-select: text"
+        >
+          {{ item }}
+        </div>
         <!-- icon="face" -->
       </q-chat-message>
     </div>
@@ -154,7 +161,6 @@ onMounted(async () => {
   height: calc(100vh - 56px - 100px);
   overflow-y: scroll;
   overflow-x: hidden;
-  user-select: text;
 }
 .chat::-webkit-scrollbar {
   display: none;
