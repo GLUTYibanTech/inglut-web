@@ -154,6 +154,7 @@ onMounted(async () => {
   height: calc(100vh - 56px - 100px);
   overflow-y: scroll;
   overflow-x: hidden;
+  user-select: text;
 }
 .chat::-webkit-scrollbar {
   display: none;
