@@ -45,6 +45,7 @@ import { useRouter } from "vue-router";
 import { useClassTable } from "../composables/useClassTable";
 import { todayofWeek, weekCount } from "../utils/today";
 import ClassInfoDialog from "./../components/classTable/ClassInfoDialog.vue";
+import { setting } from "./classTableDefaultConfig";
 export default {
   setup() {
     const $q = useQuasar();
@@ -56,6 +57,10 @@ export default {
     const isEmptyClassToday = ref(false);
     //滤出今天的课程
     const getTodayClass = () => {
+      if (setting.daysPerWeek == 5 && todayofWeek > 4) {
+        isEmptyClassToday.value = true;
+        return [];
+      }
       const todayClassdata = data.value[currentIndex.value][todayofWeek].filter(
         (x) => !x.isEmpty
       );

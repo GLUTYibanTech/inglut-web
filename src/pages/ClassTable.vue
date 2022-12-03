@@ -1,8 +1,8 @@
 <template>
   <!-- 课程表页面 -->
-  <div>
+  <div class="class-background">
     <div
-      class="current-week relative-position q-ma-sm"
+      class="current-week relative-position q-pa-sm"
       v-ripple
       @click="showSlider"
     >
@@ -12,7 +12,7 @@
       <div class="time-slot-place-holder"></div>
       <div
         class="day-row"
-        v-for="i in 7"
+        v-for="i in setting.daysPerWeek"
         :key="i"
         :style="{
           background:
@@ -25,7 +25,15 @@
     </div>
     <div class="days flex no-wrap">
       <div class="time-slot-place-holder">
-        <div class="time-block" v-for="i in 14" :key="i">{{ i }}</div>
+        <div
+          class="time-block ellipsis text-center"
+          v-for="(i, index) in classPeriodNames"
+          :key="index"
+        >
+          {{ i }} <br />
+          {{ classPeriods[index].startTime }} <br />
+          {{ classPeriods[index].endTime }}
+        </div>
       </div>
 
       <!-- 使用swiper组件，可左右滑动 -->
@@ -88,6 +96,7 @@ import { useRouter } from "vue-router";
 import "swiper/css";
 import { watch } from "vue-demi";
 import { feedbackError } from "../utils/errorFeedback";
+import Indexdb from "../utils/indexdb";
 import {
   dayIndextoChineseChar,
   todayofWeek,
@@ -100,6 +109,14 @@ export default {
     SwiperSlide,
   },
   setup() {
+    Indexdb.get("background").then((x) => {
+      console.log(x);
+      if (x) {
+        document.getElementsByClassName(
+          "class-background"
+        )[0].style.backgroundImage = `url(${x.data})`;
+      }
+    });
     const $q = useQuasar();
     const router = useRouter();
     isNewUser().then((x) => {
@@ -174,6 +191,23 @@ export default {
       data,
       onSwiper,
       onSlideChange,
+      classPeriodNames: [
+        1,
+        2,
+        3,
+        4,
+        "中午1",
+        "中午2",
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+      ],
+      classPeriods: setting.times,
       showClassInfo(aClass) {
         //点击课程块弹出课程信息
         $q.dialog({
@@ -257,4 +291,9 @@ export default {
   display: flex
   justify-content: center
   align-items: center
+  font-size: 0.8em
+.class-background
+  background-repeat:no-repeat
+  background-position: center top
+  background-size: cover
 </style>

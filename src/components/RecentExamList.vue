@@ -4,7 +4,7 @@
       近期考试 <q-icon name="navigate_next" size="20px" />
     </div>
     <q-card-section>
-      <div class="examListContainer" v-if="isFinished && data.length > 1">
+      <div class="examListContainer" v-if="isFinished && data.length >= 1">
         <div
           class="singleExam relative-position bg-primary q-px-sm"
           v-ripple
@@ -16,7 +16,7 @@
             {{ exam[0] }}
           </div>
           <div class="text-white text-ellipsis text-subtitle1">
-            {{ exam[1] }}
+            {{ exam[1].slice(5) }} {{ exam[2].substring(0, 5) }}
           </div>
         </div>
       </div>
