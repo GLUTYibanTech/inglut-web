@@ -16,11 +16,11 @@
             .replace('T', ' ')
             .replace('.', '')
         "
-        size="6"
         :sent="isMe(dialog.chatId)"
         :bg-color="isMe(dialog.chatId) ? 'amber-7' : 'primary'"
         :text-color="isMe(dialog.chatId) ? 'black' : 'white'"
       >
+        <!-- size="6" -->
         <template #avatar>
           <q-avatar
             :color="isMe(dialog.chatId) ? 'orange' : 'primary'"

@@ -38,9 +38,9 @@ export default defineConfig({
 
     proxy: {
       "/webapi": {
-        target: "https://yiban.glut.edu.cn/",
-        // target: "http://127.0.0.1:8000/",
-        // rewrite: (path) => path.replace(/^\/webapi/, ""),
+        // target: "https://yiban.glut.edu.cn/",
+        target: "http://127.0.0.1:8000/",
+        rewrite: (path) => path.replace(/^\/webapi/, ""),
 
         changeOrigin: true,
 
