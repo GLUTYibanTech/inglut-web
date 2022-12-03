@@ -267,7 +267,6 @@ export default {
 
 .current-week
   text-align: center
-  height: 40px
   line-height: 40px
   border-radius: 7px
   letter-spacing: 1px
