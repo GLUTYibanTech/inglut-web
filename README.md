@@ -32,3 +32,7 @@ npm run build
 ```sh
 npm run lint
 ```
+
+### 自动构建
+
+push到`main`后将自动部署到生产环境
