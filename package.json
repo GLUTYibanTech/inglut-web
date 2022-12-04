@@ -9,30 +9,31 @@
   },
   "dependencies": {
     "@microsoft/signalr": "^7.0.0",
-    "@quasar/extras": "^1.13.6",
+    "@quasar/extras": "^1.15.6",
     "axios": "^0.27.2",
     "dayjs": "^1.11.1",
     "element-plus": "^2.1.11",
     "md5": "^2.3.0",
     "pinia": "^2.0.13",
-    "quasar": "^2.6.6",
-    "swiper": "^8.1.4",
-    "vue": "^3.2.33",
-    "vue-axios": "^3.4.1",
+    "quasar": "^2.10.2",
+    "swiper": "^8.4.5",
+    "vue": "^3.2.45",
+    "vue-axios": "^3.5.2",
     "vue-demi": "^0.13.11",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@quasar/vite-plugin": "^1.0.9",
-    "@rushstack/eslint-patch": "^1.1.0",
-    "@vitejs/plugin-vue": "^2.3.1",
+    "@quasar/vite-plugin": "^1.2.3",
+    "@rushstack/eslint-patch": "^1.2.0",
+    "@vitejs/plugin-vue": "^3.2.0",
     "@vue/eslint-config-prettier": "^7.0.0",
     "eslint": "^8.5.0",
     "eslint-plugin-vue": "^8.2.0",
     "prettier": "^2.5.1",
     "sass": "^1.32.0",
-    "unplugin-auto-import": "^0.7.1",
-    "unplugin-vue-components": "^0.19.3",
-    "vite": "^2.9.5"
+    "unplugin-auto-import": "^0.12.0",
+    "unplugin-vue-components": "^0.22.11",
+    "vite": "^3.2.4",
+    "vite-plugin-mkcert": "^1.10.1"
   }
 }

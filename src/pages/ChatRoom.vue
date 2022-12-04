@@ -1,26 +1,15 @@
 <template>
   <div class="q-ma-sm">
-    <!-- avatar="https://cdn.quasar.dev/img/avatar3.jpg" -->
     <div class="chat" ref="chatScroll">
-      <!-- :text="dialog.dialogs" -->
       <q-chat-message
         v-for="(dialog, index) in messageList"
         :key="index"
-        :name="
-          dialog.nick ? dialog.nick : 'Anonymous' + dialog.chatId.slice(0, 5)
-        "
-        :stamp="
-          dialog.time
-            .substring('20', '.')
-            .slice(5)
-            .replace('T', ' ')
-            .replace('.', '')
-        "
+        :name="dialog.nick ?? dialog.chatId.slice(0, 5)"
+        :stamp="dialog.time"
         :sent="isMe(dialog.chatId)"
         :bg-color="isMe(dialog.chatId) ? 'amber-7' : 'primary'"
         :text-color="isMe(dialog.chatId) ? 'black' : 'white'"
       >
-        <!-- size="6" -->
         <template #avatar>
           <q-avatar
             :color="isMe(dialog.chatId) ? 'orange' : 'primary'"
@@ -30,9 +19,7 @@
               'q-mr-sm': !isMe(dialog.chatId),
             }"
             >{{
-              (dialog.nick ? dialog.nick : "Anonymous")
-                .slice(0, 1)
-                .toUpperCase()
+              (dialog.nick ?? dialog.chatId).slice(0, 1).toUpperCase()
             }}</q-avatar
           >
         </template>
@@ -41,9 +28,8 @@
           :key="index"
           style="max-width: 50vw; user-select: text"
         >
-          {{ item }}
+          <span v-text="item"></span>
         </div>
-        <!-- icon="face" -->
       </q-chat-message>
     </div>
     <q-input
@@ -54,9 +40,7 @@
     >
       <template v-slot:before>
         <q-avatar color="primary" text-color="white">{{
-          (myInfo.nickName ? myInfo.nickName : "Anonymous")
-            .slice(0, 1)
-            .toUpperCase()
+          (myInfo.nickName ?? myChatId).slice(0, 1).toUpperCase()
         }}</q-avatar>
       </template>
 
@@ -95,58 +79,65 @@ function sendMessage() {
   connection.send("SendMessage", sendText.value);
   sendText.value = "";
 }
-// const others = computed(() =>
-//   messageList.value.filter((x) => x.chatId != myChatId.value)
-// );
-// const mine = computed(() =>
-//   messageList.value.filter((x) => x.chatId != myChatId.value)
-// );
+connection.on("ReceiveMessage", (data) => {
+  console.log("收到");
+  lastMessage = messageList.value[messageList.value.length - 1];
+  lastMessage.time = data.time
+    .substring("20", ".")
+    .slice(5)
+    .replace("T", " ")
+    .replace(".", "")
+    .slice(0, -3);
+  if (lastMessage && data.chatId == lastMessage.chatId) {
+    lastMessage.dialogs = [...lastMessage.dialogs, data.message];
+    messageList.value[messageList.value.length - 1] = lastMessage;
+  } else {
+    lastMessage = data;
+    lastMessage.time = data.time
+      .substring("20", ".")
+      .slice(5)
+      .replace("T", " ")
+      .replace(".", "")
+      .slice(0, -3);
+    lastMessage.dialogs = [data.message];
+    messageList.value.push(lastMessage);
+  }
+  setTimeout(() => {
+    try {
+      chatScroll.value.scrollTop = chatScroll.value.scrollHeight;
+    } catch ({ e }) {
+      console.log(e);
+    }
+  }, 100);
+});
+connection.on("AuthRequired", async () => {
+  connection.invoke("Auth", await indexdb.getToken());
+});
+connection.on("ReceiveHistory", async (history) => {
+  history.forEach((element) => {
+    element.dialogs = [element.message];
+    element.time = element.time
+      .substring("20", ".")
+      .slice(5)
+      .replace("T", " ")
+      .replace(".", "")
+      .slice(0, -3);
+    messageList.value.push(element);
+  });
+  setTimeout(() => {
+    try {
+      chatScroll.value.scrollTop = chatScroll.value.scrollHeight;
+    } catch ({ e }) {
+      console.log(e);
+    }
+  }, 100);
+});
 let lastMessage = null;
 onMounted(async () => {
   myInfo.value = await getUserInfo();
   myChatId.value = md5(myInfo.value.studentId).toUpperCase();
-  // window.chatScroll = chatScroll.value;
-  connection.on("ReceiveMessage", (data) => {
-    console.log("收到");
-    lastMessage = messageList.value[messageList.value.length - 1];
-    if (lastMessage && data.chatId == lastMessage.chatId) {
-      lastMessage.dialogs = [...lastMessage.dialogs, data.message];
-      messageList.value[messageList.value.length - 1] = lastMessage;
-    } else {
-      lastMessage = data;
-      lastMessage.dialogs = [data.message];
-      messageList.value.push(lastMessage);
-    }
-    setTimeout(() => {
-      try {
-        chatScroll.value.scrollTop = chatScroll.value.scrollHeight;
-      } catch ({ e }) {
-        console.log(e);
-      }
-    }, 100);
-  });
-  connection.on("AuthRequired", async () => {
-    connection.invoke("Auth", await indexdb.getToken());
-  });
-  connection.on("ReceiveHistory", async (history) => {
-    console.log(history);
-    history.forEach((element) => {
-      element.dialogs = [element.message];
-      messageList.value.push(element);
-    });
-    setTimeout(() => {
-      try {
-        chatScroll.value.scrollTop = chatScroll.value.scrollHeight;
-      } catch ({ e }) {
-        console.log(e);
-      }
-    }, 100);
-  });
-
   await connection.start();
   connection.invoke("GetHistory");
-
-  window.connection = connection;
 });
 </script>
 

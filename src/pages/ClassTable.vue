@@ -293,6 +293,6 @@ export default {
   font-size: 0.8em
 .class-background
   background-repeat:no-repeat
-  background-position: center top
+  background-position: center center
   background-size: cover
 </style>

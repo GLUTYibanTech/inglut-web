@@ -46,6 +46,7 @@ async function isLoginValid() {
   return http.status == 200;
 }
 async function setNickName(nickname) {
+  if (nickname.length > 15) return false;
   var http = await (
     await createAxiosWithToken()
   ).post(`/webapi/setNickName?nickName=${nickname}`);

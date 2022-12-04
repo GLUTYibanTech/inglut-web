@@ -5,12 +5,12 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 // FILE: vite.config.js
-
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    // mkcert(),
     vue({
       template: { transformAssetUrls },
     }),
@@ -31,25 +31,23 @@ export default defineConfig({
     },
   },
   server: {
-    // port: 9090,
     host: "0.0.0.0",
-
-    open: true,
-
+    port: 3000,
     proxy: {
       "/webapi": {
-        // target: "https://yiban.glut.edu.cn/",
-        target: "http://127.0.0.1:8000/",
-        rewrite: (path) => path.replace(/^\/webapi/, ""),
+        target: "https://yiban.glut.edu.cn/",
+        // target: "http://127.0.0.1:8000/",
+        // rewrite: (path) => path.replace(/^\/webapi/, ""),
 
         changeOrigin: true,
 
         // ws: false,
       },
       "/signalR": {
-        // target: "https://yiban.glut.edu.cn/",
-        rewrite: (path) => path.replace(/^\/signalR/, ""),
-        target: "ws://127.0.0.1:8000/chatHub",
+        target: "https://yiban.glut.edu.cn/",
+        // rewrite: (path) => path.replace(/^\/signalR/, ""),
+        changeOrigin: true,
+        // target: "ws://127.0.0.1:8000/chatHub",
         ws: true,
 
         // ws: false,
