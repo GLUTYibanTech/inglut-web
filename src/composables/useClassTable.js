@@ -79,6 +79,7 @@ function useClassTable({ fromDb = true } = { fromDb: true }) {
               if (dayCopyed[i - 1].endPosi >= dayCopyed[i].endPosi) {
                 day[i - 1].primativeData.push(dayCopyed[i].primativeData[0]);
                 day[i - 1].badge++;
+                day[i].display = false;
                 console.log("type1", day[i - 1]);
               } else if (
                 i >= 2 &&
