@@ -64,6 +64,7 @@ export default {
         { name: "周数", value: item[3], icon: "date_range" },
         { name: "节数", value: item[4], icon: "schedule" },
         { name: "类型", value: item[5], icon: "border_color" },
+        { name: "时间", value: item[8], icon: "alarm" },
       ]);
     });
     // dialogRef      - Vue ref to be applied to QDialog

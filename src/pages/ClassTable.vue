@@ -110,7 +110,6 @@ export default {
   },
   setup() {
     Indexdb.get("background").then((x) => {
-      console.log(x);
       if (x) {
         document.getElementsByClassName(
           "class-background"

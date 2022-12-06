@@ -66,16 +66,28 @@ function useClassTable({ fromDb = true } = { fromDb: true }) {
           });
         });
         if (day.length > 1) {
-          day.sort((a, b) => a.startPosi - b.startPosi);
+          day
+            .sort((a, b) => a.startPosi - b.startPosi)
+            .forEach((x) => (x.display = true));
           //合并重复项
           var dayCopyed = [...day];
           for (var i = 1; i <= dayCopyed.length - 1; i++) {
-            if (dayCopyed[i - 1].endPosi > dayCopyed[i].startPosi) {
+            if (
+              dayCopyed[i - 1].endPosi > dayCopyed[i].startPosi ||
+              (i >= 2 && dayCopyed[i - 2].endPosi > dayCopyed[i].startPosi)
+            ) {
               if (dayCopyed[i - 1].endPosi >= dayCopyed[i].endPosi) {
                 day[i - 1].primativeData.push(dayCopyed[i].primativeData[0]);
-                day[i - 1].badge = 2;
-                day.splice(i);
+                day[i - 1].badge++;
                 console.log("type1", day[i - 1]);
+              } else if (
+                i >= 2 &&
+                dayCopyed[i - 2].endPosi >= dayCopyed[i].endPosi
+              ) {
+                day[i - 2].primativeData.push(dayCopyed[i].primativeData[0]);
+                day[i - 2].badge++;
+                console.log("type3", day[i - 2], dayCopyed[i]);
+                day[i].display = false;
               } else {
                 day[i].primativeData.push(dayCopyed[i - 1].primativeData[0]);
                 day[i].badge = 2;
@@ -84,11 +96,12 @@ function useClassTable({ fromDb = true } = { fromDb: true }) {
                   day[i].startPosi - day[i - 1].startPosi;
                 day[i - 1].cardHeight =
                   day[i - 1].classLength * singleClassCardHeight;
-                day.splice(i - 1);
+                day[i - 1].display = false;
                 console.log("type2", day[i - 1], day[i]);
               }
             }
           }
+          day = day.filter((x) => x.display);
         }
         var newDay = [];
         var total = 0;
@@ -109,7 +122,6 @@ function useClassTable({ fromDb = true } = { fromDb: true }) {
           totolPosi += day[m].classLength;
           insertTime++;
         }
-        // console.log(newDay);
         week.push(newDay);
         if (week.length == 7) {
           if (setting.daysPerWeek < 7) {
