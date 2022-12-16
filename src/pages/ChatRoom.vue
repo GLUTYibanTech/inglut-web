@@ -1,6 +1,6 @@
 <template>
   <div class="q-ma-sm">
-    <div class="chat" ref="chatScroll">
+    <div class="chat">
       <q-chat-message
         v-for="(dialog, index) in messageList"
         :key="index"
@@ -31,6 +31,7 @@
           <span v-text="item"></span>
         </div>
       </q-chat-message>
+      <div ref="chatScroll"></div>
     </div>
     <q-input
       class="fixed bottom q-pb-md"
@@ -104,7 +105,7 @@ connection.on("ReceiveMessage", (data) => {
   }
   setTimeout(() => {
     try {
-      chatScroll.value.scrollTop = chatScroll.value.scrollHeight;
+      chatScroll.value.scrollIntoView({ behavior: "smooth" });
     } catch ({ e }) {
       console.log(e);
     }
@@ -126,7 +127,7 @@ connection.on("ReceiveHistory", async (history) => {
   });
   setTimeout(() => {
     try {
-      chatScroll.value.scrollTop = chatScroll.value.scrollHeight;
+      chatScroll.value.scrollIntoView({ behavior: "smooth" });
     } catch ({ e }) {
       console.log(e);
     }
