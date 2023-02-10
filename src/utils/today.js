@@ -1,17 +1,22 @@
 import dayjs from "dayjs";
-const startDate = dayjs("2022-08-28");
+const startDate = dayjs("2023-02-19");
 const now = dayjs();
 const year = now.year();
 const month = now.month(); //0-11
 const term = month < 8 && month > 1 ? "1" : "2"; //"1"春季”2“秋季
-const dayCount = now.diff(startDate, "day");
+let dayCount = now.diff(startDate, "day");
 let weekCount = now.diff(startDate, "week");
 let todayofWeek = now.day(); //从0开始计
+// debugger;
 //dayjs每周第一天是周日，纠正为周一
 todayofWeek--;
 if (todayofWeek == -1) {
   weekCount--; //周日是下周第一天，拉回”上周“
   todayofWeek = 6;
+}
+if (dayCount < 0) {
+  dayCount = 0;
+  weekCount = 0;
 }
 const dayIndextoChineseChar = (num) =>
   ["一", "二", "三", "四", "五", "六", "日"][num];
