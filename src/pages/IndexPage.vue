@@ -57,7 +57,7 @@
               课程表
             </div>
           </div>
-          <div class="col-3 text-center" @click="router.push('/chat')">
+          <!-- <div class="col-3 text-center" @click="router.push('/chat')">
             <q-avatar
               size="50px"
               font-size="24px"
@@ -68,7 +68,7 @@
             <div class="flex-center q-ma-sm" style="font-size: 0.9em">
               ChatRoom
             </div>
-          </div>
+          </div> -->
         </div>
       </q-card-section>
     </q-card>
